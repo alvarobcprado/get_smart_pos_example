@@ -1,3 +1,5 @@
+import 'package:get_smart_pos/src/models/payment_request.dart';
+import 'package:get_smart_pos/src/models/payment_response.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'get_smart_pos_method_channel.dart';
@@ -25,5 +27,9 @@ abstract class GetSmartPosPlatform extends PlatformInterface {
 
   Future<String?> getPlatformVersion() {
     throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<PaymentResponse> paymentV3(PaymentRequest request) {
+    throw UnimplementedError('paymentV3() has not been implemented.');
   }
 }

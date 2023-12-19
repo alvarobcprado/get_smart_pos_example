@@ -1,22 +1,21 @@
 name: get_smart_pos
 description: A new Flutter plugin project.
 version: 0.0.1
-homepage:
 
 environment:
-  sdk: '>=3.1.3 <4.0.0'
-  flutter: '>=3.3.0'
+  sdk: ">=3.1.3 <4.0.0"
+  flutter: ">=3.3.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  flutter_test:
+    sdk: flutter
   plugin_platform_interface: ^2.0.2
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   flutter_lints: ^2.0.0
-  pigeon: ^14.0.1
+  pigeon: ^15.0.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
