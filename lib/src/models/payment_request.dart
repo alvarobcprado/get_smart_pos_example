@@ -1,4 +1,5 @@
 import 'package:get_smart_pos/src/pigeon/payment/payment.pigeon.dart';
+import 'package:get_smart_pos/src/utils/extensions.dart';
 
 class PaymentRequest {
   const PaymentRequest({
@@ -21,7 +22,7 @@ class PaymentRequest {
 
   PaymentRequest.fromPigeon(PigeonPaymentRequest request)
       : type = request.type,
-        amount = request.amount,
+        amount = request.amount.toCurrency(),
         callerId = request.callerId,
         currencyPosition = request.currencyPosition,
         currencyCode = request.currencyCode,
@@ -39,7 +40,7 @@ class PaymentRequest {
   PigeonPaymentRequest toPigeon() {
     return PigeonPaymentRequest(
       type: type,
-      amount: amount,
+      amount: amount.toCurrencyString(),
       callerId: callerId,
       currencyPosition: currencyPosition,
       currencyCode: currencyCode,
@@ -57,7 +58,7 @@ class PaymentRequest {
   }
 
   final String type;
-  final String amount;
+  final double amount;
   final String callerId;
   final String? creditType;
   final String? currencyPosition;

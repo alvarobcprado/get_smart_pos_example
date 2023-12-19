@@ -17,7 +17,7 @@ class MockGetSmartPosPlatform
     return Future.value(
       PaymentResponse(
         result: 'result',
-        amount: 'amount',
+        amount: 1.0,
         callerId: 'callerId',
         type: 'type',
         inputType: 'inputType',
