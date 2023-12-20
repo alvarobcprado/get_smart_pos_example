@@ -27,10 +27,10 @@ class PaymentRequest {
       paymentType: paymentType.toPigeon(),
       amount: amount.toPigeon(),
       callerId: callerId,
-      currencyPosition: currencyPosition,
+      currencyPosition: currencyPosition?.toPigeon(),
       currencyCode: currencyCode,
       creditType: creditType?.toPigeon(),
-      installments: installments,
+      installments: installments?.toPigeon(),
       extraScreens: extraScreens,
       extraData: extraData,
       disableTypedTransaction: disableTypedTransaction,
@@ -46,9 +46,9 @@ class PaymentRequest {
   final double amount;
   final String callerId;
   final PaymentCreditType? creditType;
-  final String? currencyPosition;
+  final PaymentCurrencyPosition? currencyPosition;
   final String? currencyCode;
-  final String? installments;
+  final int? installments;
   final String? extraScreens;
   final String? extraData;
   final bool? disableTypedTransaction;

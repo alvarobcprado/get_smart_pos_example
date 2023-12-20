@@ -1,4 +1,4 @@
-extension CurrencyToCentsString on double {
+extension DoubleToPigeon on double {
   String toPigeon() {
     final totalCents = double.parse(toStringAsFixed(2)) * 100;
 
@@ -8,7 +8,7 @@ extension CurrencyToCentsString on double {
   }
 }
 
-extension CentStringToCurrency on String {
+extension StringFromPigeon on String {
   double toCurrency() {
     if (isEmpty) {
       return 0.0;
@@ -19,5 +19,11 @@ extension CentStringToCurrency on String {
     final totalCurrency = double.parse((totalCents / 100).toStringAsFixed(2));
 
     return totalCurrency;
+  }
+}
+
+extension IntToPigeon on int {
+  String toPigeon() {
+    return toString();
   }
 }
