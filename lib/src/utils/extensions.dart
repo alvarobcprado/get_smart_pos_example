@@ -1,5 +1,5 @@
 extension CurrencyToCentsString on double {
-  String toCurrencyString() {
+  String toPigeon() {
     final totalCents = double.parse(toStringAsFixed(2)) * 100;
 
     final totalCentsString = totalCents.toStringAsFixed(0).padLeft(12, '0');

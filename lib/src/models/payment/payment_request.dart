@@ -1,3 +1,4 @@
+import 'package:get_smart_pos/src/models/payment/payment_type.dart';
 import 'package:get_smart_pos/src/pigeon/get_smart_pos.pigeon.dart';
 import 'package:get_smart_pos/src/utils/extensions.dart';
 
@@ -20,27 +21,10 @@ class PaymentRequest {
     this.additionalInfo,
   });
 
-  PaymentRequest.fromPigeon(PigeonPaymentRequest request)
-      : paymentType = request.paymentType,
-        amount = request.amount.toCurrency(),
-        callerId = request.callerId,
-        currencyPosition = request.currencyPosition,
-        currencyCode = request.currencyCode,
-        creditType = request.creditType,
-        installments = request.installments,
-        extraScreens = request.extraScreens,
-        extraData = request.extraData,
-        disableTypedTransaction = request.disableTypedTransaction,
-        disableMagStripe = request.disableMagStripe,
-        disableCustomerSlipSpace = request.disableCustomerSlipSpace,
-        allowPrintCurrentTransaction = request.allowPrintCurrentTransaction,
-        orderId = request.orderId,
-        additionalInfo = request.additionalInfo;
-
   PigeonPaymentRequest toPigeon() {
     return PigeonPaymentRequest(
-      paymentType: paymentType,
-      amount: amount.toCurrencyString(),
+      paymentType: paymentType.toPigeon(),
+      amount: amount.toPigeon(),
       callerId: callerId,
       currencyPosition: currencyPosition,
       currencyCode: currencyCode,
@@ -57,7 +41,7 @@ class PaymentRequest {
     );
   }
 
-  final String paymentType;
+  final PaymentType paymentType;
   final double amount;
   final String callerId;
   final String? creditType;
