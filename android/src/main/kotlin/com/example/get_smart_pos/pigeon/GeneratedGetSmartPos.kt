@@ -232,7 +232,7 @@ data class PigeonCheckStatusResponse (
   val printMerchantPreference: Boolean? = null,
   val orderId: String? = null,
   val pixPayloadResponse: String? = null,
-  val refunded: Boolean? = null
+  val refunded: String? = null
 
 ) {
   companion object {
@@ -260,7 +260,7 @@ data class PigeonCheckStatusResponse (
       val printMerchantPreference = list[19] as Boolean?
       val orderId = list[20] as String?
       val pixPayloadResponse = list[21] as String?
-      val refunded = list[22] as Boolean?
+      val refunded = list[22] as String?
       return PigeonCheckStatusResponse(result, resultDetails, amount, callerId, nsu, nsuLastSuccessfullMessage, cvNumber, type, brand, inputType, installments, gmtDateTime, nsuLocal, authorizationCode, cardBin, cardLastDigits, extraScreensResult, cardholderName, automationSlip, printMerchantPreference, orderId, pixPayloadResponse, refunded)
     }
   }

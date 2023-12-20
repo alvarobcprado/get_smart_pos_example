@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.example.get_smart_pos.PigeonPaymentRequest
 import com.example.get_smart_pos.PigeonPaymentResponse
 
-class PaymentMapper {
+class PaymentMapper : BaseMapper<PigeonPaymentRequest, PigeonPaymentResponse> {
     private object PaymentResponse {
         const val result = "result"
         const val amount = "amount"
@@ -49,66 +49,62 @@ class PaymentMapper {
         const val additionalInfo = "additionalInfo"
     }
 
-    companion object {
-        /// Create a Bundle to store the paymentRequest data
-        fun paymentRequestToBundle(request: PigeonPaymentRequest): Bundle =
-            Bundle().apply {
-                with(request) {
-                    putStringIfNotNull(PaymentRequest.paymentType, paymentType)
-                    putStringIfNotNull(PaymentRequest.creditType, creditType)
-                    putStringIfNotNull(PaymentRequest.amount, amount)
-                    putStringIfNotNull(PaymentRequest.callerId, callerId)
-                    putStringIfNotNull(PaymentRequest.currencyPosition, currencyPosition)
-                    putStringIfNotNull(PaymentRequest.currencyCode, currencyCode)
-                    putStringIfNotNull(PaymentRequest.installments, installments)
-                    putStringIfNotNull(PaymentRequest.extraScreens, extraScreens)
-                    putStringIfNotNull(PaymentRequest.extraData, extraData)
-                    putBooleanIfNotNull(
-                        PaymentRequest.disableTypedTransaction,
-                        disableTypedTransaction
-                    )
-                    putBooleanIfNotNull(PaymentRequest.disableMagStripe, disableMagStripe)
-                    putBooleanIfNotNull(
-                        PaymentRequest.disableCustomerSlipSpace,
-                        disableCustomerSlipSpace
-                    )
-                    putBooleanIfNotNull(
-                        PaymentRequest.allowPrintCurrentTransaction,
-                        allowPrintCurrentTransaction
-                    )
-                    putStringIfNotNull(PaymentRequest.orderId, orderId)
-                    putStringIfNotNull(PaymentRequest.additionalInfo, additionalInfo)
-                }
-            }
-
-        /// Extract the parameters from the intent returned by the Payment Deeplink
-        fun intentToPaymentResponse(intent: Intent?): PigeonPaymentResponse {
-            with(intent) {
-                return PigeonPaymentResponse(
-                    result = getStringExtraOrEmpty(PaymentResponse.result),
-                    amount = getStringExtraOrEmpty(PaymentResponse.amount),
-                    callerId = getStringExtraOrEmpty(PaymentResponse.callerId),
-                    nsu = getStringExtraOrNull(PaymentResponse.nsu),
-                    nsuLastSuccessfullMessage = getStringExtraOrNull(PaymentResponse.nsuLastSuccessfullMessage),
-                    cvNumber = getStringExtraOrNull(PaymentResponse.cvNumber),
-                    inputType = getStringExtraOrEmpty(PaymentResponse.inputType),
-                    installments = getStringExtraOrEmpty(PaymentResponse.installments),
-                    type = getStringExtraOrEmpty(PaymentResponse.type),
-                    brand = getStringExtraOrNull(PaymentResponse.brand),
-                    gmtDateTime = getStringExtraOrNull(PaymentResponse.gmtDateTime),
-                    nsuLocal = getStringExtraOrNull(PaymentResponse.nsuLocal),
-                    authorizationCode = getStringExtraOrNull(PaymentResponse.authorizationCode),
-                    cardBin = getStringExtraOrNull(PaymentResponse.cardBin),
-                    cardLastDigits = getStringExtraOrNull(PaymentResponse.cardLastDigits),
-                    extraScreensResult = getStringExtraOrNull(PaymentResponse.extraScreensResult),
-                    cardholderName = getStringExtraOrNull(PaymentResponse.cardholderName),
-                    automationSlip = getStringExtraOrNull(PaymentResponse.automationSlip),
-                    printMerchantPreference = getBooleanExtraOrNull(PaymentResponse.printMerchantPreference),
-                    orderId = getStringExtraOrNull(PaymentResponse.orderId),
-                    pixPayloadResponse = getStringExtraOrNull(PaymentResponse.pixPayloadResponse),
-                    resultDetails = getStringExtraOrNull(PaymentResponse.resultDetails),
+    override fun requestToBundle(request: PigeonPaymentRequest): Bundle =
+        Bundle().apply {
+            with(request) {
+                putStringIfNotNull(PaymentRequest.paymentType, paymentType)
+                putStringIfNotNull(PaymentRequest.creditType, creditType)
+                putStringIfNotNull(PaymentRequest.amount, amount)
+                putStringIfNotNull(PaymentRequest.callerId, callerId)
+                putStringIfNotNull(PaymentRequest.currencyPosition, currencyPosition)
+                putStringIfNotNull(PaymentRequest.currencyCode, currencyCode)
+                putStringIfNotNull(PaymentRequest.installments, installments)
+                putStringIfNotNull(PaymentRequest.extraScreens, extraScreens)
+                putStringIfNotNull(PaymentRequest.extraData, extraData)
+                putBooleanIfNotNull(
+                    PaymentRequest.disableTypedTransaction,
+                    disableTypedTransaction
                 )
+                putBooleanIfNotNull(PaymentRequest.disableMagStripe, disableMagStripe)
+                putBooleanIfNotNull(
+                    PaymentRequest.disableCustomerSlipSpace,
+                    disableCustomerSlipSpace
+                )
+                putBooleanIfNotNull(
+                    PaymentRequest.allowPrintCurrentTransaction,
+                    allowPrintCurrentTransaction
+                )
+                putStringIfNotNull(PaymentRequest.orderId, orderId)
+                putStringIfNotNull(PaymentRequest.additionalInfo, additionalInfo)
             }
+        }
+
+    override fun intentToResponse(intent: Intent?): PigeonPaymentResponse {
+        with(intent) {
+            return PigeonPaymentResponse(
+                result = getStringExtraOrEmpty(PaymentResponse.result),
+                amount = getStringExtraOrEmpty(PaymentResponse.amount),
+                callerId = getStringExtraOrEmpty(PaymentResponse.callerId),
+                nsu = getStringExtraOrNull(PaymentResponse.nsu),
+                nsuLastSuccessfullMessage = getStringExtraOrNull(PaymentResponse.nsuLastSuccessfullMessage),
+                cvNumber = getStringExtraOrNull(PaymentResponse.cvNumber),
+                inputType = getStringExtraOrEmpty(PaymentResponse.inputType),
+                installments = getStringExtraOrEmpty(PaymentResponse.installments),
+                type = getStringExtraOrEmpty(PaymentResponse.type),
+                brand = getStringExtraOrNull(PaymentResponse.brand),
+                gmtDateTime = getStringExtraOrNull(PaymentResponse.gmtDateTime),
+                nsuLocal = getStringExtraOrNull(PaymentResponse.nsuLocal),
+                authorizationCode = getStringExtraOrNull(PaymentResponse.authorizationCode),
+                cardBin = getStringExtraOrNull(PaymentResponse.cardBin),
+                cardLastDigits = getStringExtraOrNull(PaymentResponse.cardLastDigits),
+                extraScreensResult = getStringExtraOrNull(PaymentResponse.extraScreensResult),
+                cardholderName = getStringExtraOrNull(PaymentResponse.cardholderName),
+                automationSlip = getStringExtraOrNull(PaymentResponse.automationSlip),
+                printMerchantPreference = getBooleanExtraOrNull(PaymentResponse.printMerchantPreference),
+                orderId = getStringExtraOrNull(PaymentResponse.orderId),
+                pixPayloadResponse = getStringExtraOrNull(PaymentResponse.pixPayloadResponse),
+                resultDetails = getStringExtraOrNull(PaymentResponse.resultDetails),
+            )
         }
     }
 }

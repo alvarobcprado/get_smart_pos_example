@@ -45,4 +45,12 @@ class GetSmartPosPlugin : FlutterPlugin, GetSmartPosHostApi, ActivityAware {
     ) {
         delegate.paymentV3(request, callback)
     }
+
+
+    override fun checkStatus(
+        request: PigeonCheckStatusRequest,
+        callback: (Result<PigeonCheckStatusResponse>) -> Unit
+    ) {
+        delegate.checkStatus(request, callback)
+    }
 }
