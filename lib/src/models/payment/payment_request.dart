@@ -1,3 +1,4 @@
+import 'package:get_smart_pos/src/models/payment/payment_credit_type.dart';
 import 'package:get_smart_pos/src/models/payment/payment_type.dart';
 import 'package:get_smart_pos/src/pigeon/get_smart_pos.pigeon.dart';
 import 'package:get_smart_pos/src/utils/extensions.dart';
@@ -28,7 +29,7 @@ class PaymentRequest {
       callerId: callerId,
       currencyPosition: currencyPosition,
       currencyCode: currencyCode,
-      creditType: creditType,
+      creditType: creditType?.toPigeon(),
       installments: installments,
       extraScreens: extraScreens,
       extraData: extraData,
@@ -44,7 +45,7 @@ class PaymentRequest {
   final PaymentType paymentType;
   final double amount;
   final String callerId;
-  final String? creditType;
+  final PaymentCreditType? creditType;
   final String? currencyPosition;
   final String? currencyCode;
   final String? installments;
