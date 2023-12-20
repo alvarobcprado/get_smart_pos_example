@@ -97,8 +97,73 @@ class PigeonPaymentResponse {
   final String? pixPayloadResponse;
 }
 
+class PigeonCheckStatusRequest {
+  PigeonCheckStatusRequest({
+    required this.callerId,
+    required this.allowPrintCurrentTransaction,
+  });
+
+  final String callerId;
+  final bool? allowPrintCurrentTransaction;
+}
+
+class PigeonCheckStatusResponse {
+  PigeonCheckStatusResponse({
+    required this.result,
+    this.resultDetails,
+    this.amount,
+    this.callerId,
+    this.nsu,
+    this.type,
+    this.nsuLastSuccessfullMessage,
+    this.cvNumber,
+    this.brand,
+    this.inputType,
+    this.installments,
+    this.gmtDateTime,
+    this.nsuLocal,
+    this.authorizationCode,
+    this.cardBin,
+    this.cardLastDigits,
+    this.extraScreensResult,
+    this.cardholderName,
+    this.automationSlip,
+    this.printMerchantPreference,
+    this.orderId,
+    this.pixPayloadResponse,
+    this.refunded,
+  });
+
+  final String result;
+  final String? resultDetails;
+  final String? amount;
+  final String? callerId;
+  final String? nsu;
+  final String? nsuLastSuccessfullMessage;
+  final String? cvNumber;
+  final String? type;
+  final String? brand;
+  final String? inputType;
+  final String? installments;
+  final String? gmtDateTime;
+  final String? nsuLocal;
+  final String? authorizationCode;
+  final String? cardBin;
+  final String? cardLastDigits;
+  final String? extraScreensResult;
+  final String? cardholderName;
+  final String? automationSlip;
+  final bool? printMerchantPreference;
+  final String? orderId;
+  final String? pixPayloadResponse;
+  final String? refunded;
+}
+
 @HostApi(dartHostTestHandler: 'TestGetSmartPosHostApi')
 abstract class GetSmartPosHostApi {
   @async
   PigeonPaymentResponse paymentV3(PigeonPaymentRequest request);
+
+  @async
+  PigeonCheckStatusResponse checkStatus(PigeonCheckStatusRequest request);
 }

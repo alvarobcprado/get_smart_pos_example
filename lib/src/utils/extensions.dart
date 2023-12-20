@@ -40,3 +40,13 @@ extension StringFromPigeon on String {
     return DateTime(now.year, month, day, hour, minute, second);
   }
 }
+
+extension NullableStringToPigeon on String? {
+  bool? toBoolOrNull() {
+    if (this == null) {
+      return null;
+    }
+
+    return this!.toLowerCase() == 'true';
+  }
+}

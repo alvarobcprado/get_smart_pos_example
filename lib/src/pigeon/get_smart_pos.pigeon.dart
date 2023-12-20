@@ -232,15 +232,178 @@ class PigeonPaymentResponse {
   }
 }
 
+class PigeonCheckStatusRequest {
+  PigeonCheckStatusRequest({
+    required this.callerId,
+    this.allowPrintCurrentTransaction,
+  });
+
+  String callerId;
+
+  bool? allowPrintCurrentTransaction;
+
+  Object encode() {
+    return <Object?>[
+      callerId,
+      allowPrintCurrentTransaction,
+    ];
+  }
+
+  static PigeonCheckStatusRequest decode(Object result) {
+    result as List<Object?>;
+    return PigeonCheckStatusRequest(
+      callerId: result[0]! as String,
+      allowPrintCurrentTransaction: result[1] as bool?,
+    );
+  }
+}
+
+class PigeonCheckStatusResponse {
+  PigeonCheckStatusResponse({
+    required this.result,
+    this.resultDetails,
+    this.amount,
+    this.callerId,
+    this.nsu,
+    this.nsuLastSuccessfullMessage,
+    this.cvNumber,
+    this.type,
+    this.brand,
+    this.inputType,
+    this.installments,
+    this.gmtDateTime,
+    this.nsuLocal,
+    this.authorizationCode,
+    this.cardBin,
+    this.cardLastDigits,
+    this.extraScreensResult,
+    this.cardholderName,
+    this.automationSlip,
+    this.printMerchantPreference,
+    this.orderId,
+    this.pixPayloadResponse,
+    this.refunded,
+  });
+
+  String result;
+
+  String? resultDetails;
+
+  String? amount;
+
+  String? callerId;
+
+  String? nsu;
+
+  String? nsuLastSuccessfullMessage;
+
+  String? cvNumber;
+
+  String? type;
+
+  String? brand;
+
+  String? inputType;
+
+  String? installments;
+
+  String? gmtDateTime;
+
+  String? nsuLocal;
+
+  String? authorizationCode;
+
+  String? cardBin;
+
+  String? cardLastDigits;
+
+  String? extraScreensResult;
+
+  String? cardholderName;
+
+  String? automationSlip;
+
+  bool? printMerchantPreference;
+
+  String? orderId;
+
+  String? pixPayloadResponse;
+
+  String? refunded;
+
+  Object encode() {
+    return <Object?>[
+      result,
+      resultDetails,
+      amount,
+      callerId,
+      nsu,
+      nsuLastSuccessfullMessage,
+      cvNumber,
+      type,
+      brand,
+      inputType,
+      installments,
+      gmtDateTime,
+      nsuLocal,
+      authorizationCode,
+      cardBin,
+      cardLastDigits,
+      extraScreensResult,
+      cardholderName,
+      automationSlip,
+      printMerchantPreference,
+      orderId,
+      pixPayloadResponse,
+      refunded,
+    ];
+  }
+
+  static PigeonCheckStatusResponse decode(Object result) {
+    result as List<Object?>;
+    return PigeonCheckStatusResponse(
+      result: result[0]! as String,
+      resultDetails: result[1] as String?,
+      amount: result[2] as String?,
+      callerId: result[3] as String?,
+      nsu: result[4] as String?,
+      nsuLastSuccessfullMessage: result[5] as String?,
+      cvNumber: result[6] as String?,
+      type: result[7] as String?,
+      brand: result[8] as String?,
+      inputType: result[9] as String?,
+      installments: result[10] as String?,
+      gmtDateTime: result[11] as String?,
+      nsuLocal: result[12] as String?,
+      authorizationCode: result[13] as String?,
+      cardBin: result[14] as String?,
+      cardLastDigits: result[15] as String?,
+      extraScreensResult: result[16] as String?,
+      cardholderName: result[17] as String?,
+      automationSlip: result[18] as String?,
+      printMerchantPreference: result[19] as bool?,
+      orderId: result[20] as String?,
+      pixPayloadResponse: result[21] as String?,
+      refunded: result[22] as String?,
+    );
+  }
+}
+
 class _GetSmartPosHostApiCodec extends StandardMessageCodec {
   const _GetSmartPosHostApiCodec();
   @override
   void writeValue(WriteBuffer buffer, Object? value) {
-    if (value is PigeonPaymentRequest) {
+    if (value is PigeonCheckStatusRequest) {
       buffer.putUint8(128);
       writeValue(buffer, value.encode());
-    } else if (value is PigeonPaymentResponse) {
+    } else if (value is PigeonCheckStatusResponse) {
       buffer.putUint8(129);
+      writeValue(buffer, value.encode());
+    } else if (value is PigeonPaymentRequest) {
+      buffer.putUint8(130);
+      writeValue(buffer, value.encode());
+    } else if (value is PigeonPaymentResponse) {
+      buffer.putUint8(131);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -251,8 +414,12 @@ class _GetSmartPosHostApiCodec extends StandardMessageCodec {
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
       case 128: 
-        return PigeonPaymentRequest.decode(readValue(buffer)!);
+        return PigeonCheckStatusRequest.decode(readValue(buffer)!);
       case 129: 
+        return PigeonCheckStatusResponse.decode(readValue(buffer)!);
+      case 130: 
+        return PigeonPaymentRequest.decode(readValue(buffer)!);
+      case 131: 
         return PigeonPaymentResponse.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
@@ -294,6 +461,33 @@ class GetSmartPosHostApi {
       );
     } else {
       return (__pigeon_replyList[0] as PigeonPaymentResponse?)!;
+    }
+  }
+
+  Future<PigeonCheckStatusResponse> checkStatus(PigeonCheckStatusRequest request) async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.get_smart_pos.GetSmartPosHostApi.checkStatus';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+      __pigeon_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: __pigeon_binaryMessenger,
+    );
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[request]) as List<Object?>?;
+    if (__pigeon_replyList == null) {
+      throw _createConnectionError(__pigeon_channelName);
+    } else if (__pigeon_replyList.length > 1) {
+      throw PlatformException(
+        code: __pigeon_replyList[0]! as String,
+        message: __pigeon_replyList[1] as String?,
+        details: __pigeon_replyList[2],
+      );
+    } else if (__pigeon_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (__pigeon_replyList[0] as PigeonCheckStatusResponse?)!;
     }
   }
 }

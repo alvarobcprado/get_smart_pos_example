@@ -31,4 +31,8 @@ abstract class GetSmartPosPlatform extends PlatformInterface {
   Future<PaymentResponse> paymentV3(PaymentRequest request) {
     throw UnimplementedError('paymentV3() has not been implemented.');
   }
+
+  Future<CheckStatusResponse> checkStatus(CheckStatusRequest request) {
+    throw UnimplementedError('checkStatus() has not been implemented.');
+  }
 }

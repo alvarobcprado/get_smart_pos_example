@@ -23,6 +23,20 @@ class MockGetSmartPosPlatform
       ),
     );
   }
+
+  @override
+  Future<CheckStatusResponse> checkStatus(CheckStatusRequest request) {
+    return Future.value(
+      CheckStatusResponse(
+        result: PaymentResult.success,
+        amount: 1.0,
+        callerId: 'callerId',
+        type: PaymentTypeResponse.creditInFull,
+        inputType: PaymentInputType.chip,
+        installments: 1,
+      ),
+    );
+  }
 }
 
 void main() {

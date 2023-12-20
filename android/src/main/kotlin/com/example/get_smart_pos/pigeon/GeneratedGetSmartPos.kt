@@ -186,16 +186,133 @@ data class PigeonPaymentResponse (
   }
 }
 
+/** Generated class from Pigeon that represents data sent in messages. */
+data class PigeonCheckStatusRequest (
+  val callerId: String,
+  val allowPrintCurrentTransaction: Boolean? = null
+
+) {
+  companion object {
+    @Suppress("UNCHECKED_CAST")
+    fun fromList(list: List<Any?>): PigeonCheckStatusRequest {
+      val callerId = list[0] as String
+      val allowPrintCurrentTransaction = list[1] as Boolean?
+      return PigeonCheckStatusRequest(callerId, allowPrintCurrentTransaction)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf<Any?>(
+      callerId,
+      allowPrintCurrentTransaction,
+    )
+  }
+}
+
+/** Generated class from Pigeon that represents data sent in messages. */
+data class PigeonCheckStatusResponse (
+  val result: String,
+  val resultDetails: String? = null,
+  val amount: String? = null,
+  val callerId: String? = null,
+  val nsu: String? = null,
+  val nsuLastSuccessfullMessage: String? = null,
+  val cvNumber: String? = null,
+  val type: String? = null,
+  val brand: String? = null,
+  val inputType: String? = null,
+  val installments: String? = null,
+  val gmtDateTime: String? = null,
+  val nsuLocal: String? = null,
+  val authorizationCode: String? = null,
+  val cardBin: String? = null,
+  val cardLastDigits: String? = null,
+  val extraScreensResult: String? = null,
+  val cardholderName: String? = null,
+  val automationSlip: String? = null,
+  val printMerchantPreference: Boolean? = null,
+  val orderId: String? = null,
+  val pixPayloadResponse: String? = null,
+  val refunded: Boolean? = null
+
+) {
+  companion object {
+    @Suppress("UNCHECKED_CAST")
+    fun fromList(list: List<Any?>): PigeonCheckStatusResponse {
+      val result = list[0] as String
+      val resultDetails = list[1] as String?
+      val amount = list[2] as String?
+      val callerId = list[3] as String?
+      val nsu = list[4] as String?
+      val nsuLastSuccessfullMessage = list[5] as String?
+      val cvNumber = list[6] as String?
+      val type = list[7] as String?
+      val brand = list[8] as String?
+      val inputType = list[9] as String?
+      val installments = list[10] as String?
+      val gmtDateTime = list[11] as String?
+      val nsuLocal = list[12] as String?
+      val authorizationCode = list[13] as String?
+      val cardBin = list[14] as String?
+      val cardLastDigits = list[15] as String?
+      val extraScreensResult = list[16] as String?
+      val cardholderName = list[17] as String?
+      val automationSlip = list[18] as String?
+      val printMerchantPreference = list[19] as Boolean?
+      val orderId = list[20] as String?
+      val pixPayloadResponse = list[21] as String?
+      val refunded = list[22] as Boolean?
+      return PigeonCheckStatusResponse(result, resultDetails, amount, callerId, nsu, nsuLastSuccessfullMessage, cvNumber, type, brand, inputType, installments, gmtDateTime, nsuLocal, authorizationCode, cardBin, cardLastDigits, extraScreensResult, cardholderName, automationSlip, printMerchantPreference, orderId, pixPayloadResponse, refunded)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf<Any?>(
+      result,
+      resultDetails,
+      amount,
+      callerId,
+      nsu,
+      nsuLastSuccessfullMessage,
+      cvNumber,
+      type,
+      brand,
+      inputType,
+      installments,
+      gmtDateTime,
+      nsuLocal,
+      authorizationCode,
+      cardBin,
+      cardLastDigits,
+      extraScreensResult,
+      cardholderName,
+      automationSlip,
+      printMerchantPreference,
+      orderId,
+      pixPayloadResponse,
+      refunded,
+    )
+  }
+}
+
 @Suppress("UNCHECKED_CAST")
 private object GetSmartPosHostApiCodec : StandardMessageCodec() {
   override fun readValueOfType(type: Byte, buffer: ByteBuffer): Any? {
     return when (type) {
       128.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          PigeonPaymentRequest.fromList(it)
+          PigeonCheckStatusRequest.fromList(it)
         }
       }
       129.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          PigeonCheckStatusResponse.fromList(it)
+        }
+      }
+      130.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          PigeonPaymentRequest.fromList(it)
+        }
+      }
+      131.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
           PigeonPaymentResponse.fromList(it)
         }
@@ -205,12 +322,20 @@ private object GetSmartPosHostApiCodec : StandardMessageCodec() {
   }
   override fun writeValue(stream: ByteArrayOutputStream, value: Any?)   {
     when (value) {
-      is PigeonPaymentRequest -> {
+      is PigeonCheckStatusRequest -> {
         stream.write(128)
         writeValue(stream, value.toList())
       }
-      is PigeonPaymentResponse -> {
+      is PigeonCheckStatusResponse -> {
         stream.write(129)
+        writeValue(stream, value.toList())
+      }
+      is PigeonPaymentRequest -> {
+        stream.write(130)
+        writeValue(stream, value.toList())
+      }
+      is PigeonPaymentResponse -> {
+        stream.write(131)
         writeValue(stream, value.toList())
       }
       else -> super.writeValue(stream, value)
@@ -221,6 +346,7 @@ private object GetSmartPosHostApiCodec : StandardMessageCodec() {
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface GetSmartPosHostApi {
   fun paymentV3(request: PigeonPaymentRequest, callback: (Result<PigeonPaymentResponse>) -> Unit)
+  fun checkStatus(request: PigeonCheckStatusRequest, callback: (Result<PigeonCheckStatusResponse>) -> Unit)
 
   companion object {
     /** The codec used by GetSmartPosHostApi. */
@@ -237,6 +363,26 @@ interface GetSmartPosHostApi {
             val args = message as List<Any?>
             val requestArg = args[0] as PigeonPaymentRequest
             api.paymentV3(requestArg) { result: Result<PigeonPaymentResponse> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.get_smart_pos.GetSmartPosHostApi.checkStatus", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val requestArg = args[0] as PigeonCheckStatusRequest
+            api.checkStatus(requestArg) { result: Result<PigeonCheckStatusResponse> ->
               val error = result.exceptionOrNull()
               if (error != null) {
                 reply.reply(wrapError(error))

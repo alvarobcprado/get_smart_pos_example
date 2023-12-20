@@ -4,7 +4,7 @@ enum PaymentInputType {
   contactlessChip,
   magneticStripeFallback;
 
-  static PaymentInputType? fromPigeon(String inputTypeCode) =>
+  static PaymentInputType? fromPigeon(String? inputTypeCode) =>
       switch (inputTypeCode) {
         '021' => PaymentInputType.magneticStripe,
         '051' => PaymentInputType.chip,

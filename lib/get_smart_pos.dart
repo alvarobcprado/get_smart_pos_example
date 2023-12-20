@@ -12,4 +12,8 @@ class GetSmartPos {
   Future<PaymentResponse> paymentV3(PaymentRequest request) {
     return GetSmartPosPlatform.instance.paymentV3(request);
   }
+
+  Future<CheckStatusResponse> checkStatus(CheckStatusRequest request) {
+    return GetSmartPosPlatform.instance.checkStatus(request);
+  }
 }

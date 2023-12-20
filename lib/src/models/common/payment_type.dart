@@ -20,7 +20,8 @@ enum PaymentTypeResponse {
   voucher,
   pix;
 
-  static PaymentTypeResponse? fromPigeon(String typeCode) => switch (typeCode) {
+  static PaymentTypeResponse? fromPigeon(String? typeCode) =>
+      switch (typeCode) {
         '02' => PaymentTypeResponse.debit,
         '11' => PaymentTypeResponse.creditInFull,
         '12' => PaymentTypeResponse.creditMerchantInstallment,
