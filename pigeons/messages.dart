@@ -13,7 +13,7 @@ import 'package:pigeon/pigeon.dart';
 )
 class PigeonPaymentRequest {
   const PigeonPaymentRequest({
-    required this.type,
+    required this.paymentType,
     required this.amount,
     required this.callerId,
     this.currencyPosition,
@@ -30,7 +30,7 @@ class PigeonPaymentRequest {
     this.additionalInfo,
   });
 
-  final String type;
+  final String paymentType;
   final String amount;
   final String callerId;
   final String? creditType;

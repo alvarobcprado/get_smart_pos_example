@@ -32,7 +32,7 @@ class PaymentMapper {
     }
 
     private object PaymentRequest {
-        const val type = "type"
+        const val paymentType = "paymentType"
         const val creditType = "creditType"
         const val amount = "amount"
         const val callerId = "callerId"
@@ -54,7 +54,7 @@ class PaymentMapper {
         fun paymentRequestToBundle(request: PigeonPaymentRequest): Bundle =
             Bundle().apply {
                 with(request) {
-                    putString(PaymentRequest.type, type)
+                    putString(PaymentRequest.paymentType, paymentType)
                     putString(PaymentRequest.creditType, creditType)
                     putString(PaymentRequest.amount, amount)
                     putString(PaymentRequest.callerId, callerId)

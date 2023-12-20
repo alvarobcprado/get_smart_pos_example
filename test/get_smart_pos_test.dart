@@ -2,8 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_smart_pos/get_smart_pos.dart';
 import 'package:get_smart_pos/get_smart_pos_method_channel.dart';
 import 'package:get_smart_pos/get_smart_pos_platform_interface.dart';
-import 'package:get_smart_pos/src/models/payment_request.dart';
-import 'package:get_smart_pos/src/models/payment_response.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockGetSmartPosPlatform

@@ -17,7 +17,7 @@ PlatformException _createConnectionError(String channelName) {
 
 class PigeonPaymentRequest {
   PigeonPaymentRequest({
-    required this.type,
+    required this.paymentType,
     required this.amount,
     required this.callerId,
     this.creditType,
@@ -34,7 +34,7 @@ class PigeonPaymentRequest {
     this.additionalInfo,
   });
 
-  String type;
+  String paymentType;
 
   String amount;
 
@@ -66,7 +66,7 @@ class PigeonPaymentRequest {
 
   Object encode() {
     return <Object?>[
-      type,
+      paymentType,
       amount,
       callerId,
       creditType,
@@ -87,7 +87,7 @@ class PigeonPaymentRequest {
   static PigeonPaymentRequest decode(Object result) {
     result as List<Object?>;
     return PigeonPaymentRequest(
-      type: result[0]! as String,
+      paymentType: result[0]! as String,
       amount: result[1]! as String,
       callerId: result[2]! as String,
       creditType: result[3] as String?,

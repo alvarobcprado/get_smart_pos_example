@@ -45,7 +45,7 @@ class FlutterError (
 
 /** Generated class from Pigeon that represents data sent in messages. */
 data class PigeonPaymentRequest (
-  val type: String,
+  val paymentType: String,
   val amount: String,
   val callerId: String,
   val creditType: String? = null,
@@ -65,7 +65,7 @@ data class PigeonPaymentRequest (
   companion object {
     @Suppress("UNCHECKED_CAST")
     fun fromList(list: List<Any?>): PigeonPaymentRequest {
-      val type = list[0] as String
+      val paymentType = list[0] as String
       val amount = list[1] as String
       val callerId = list[2] as String
       val creditType = list[3] as String?
@@ -80,12 +80,12 @@ data class PigeonPaymentRequest (
       val allowPrintCurrentTransaction = list[12] as Boolean?
       val orderId = list[13] as String?
       val additionalInfo = list[14] as String?
-      return PigeonPaymentRequest(type, amount, callerId, creditType, currencyPosition, currencyCode, installments, extraScreens, extraData, disableTypedTransaction, disableMagStripe, disableCustomerSlipSpace, allowPrintCurrentTransaction, orderId, additionalInfo)
+      return PigeonPaymentRequest(paymentType, amount, callerId, creditType, currencyPosition, currencyCode, installments, extraScreens, extraData, disableTypedTransaction, disableMagStripe, disableCustomerSlipSpace, allowPrintCurrentTransaction, orderId, additionalInfo)
     }
   }
   fun toList(): List<Any?> {
     return listOf<Any?>(
-      type,
+      paymentType,
       amount,
       callerId,
       creditType,

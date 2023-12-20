@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:get_smart_pos/src/models/payment_request.dart';
-import 'package:get_smart_pos/src/models/payment_response.dart';
+import 'package:get_smart_pos/src/models/models.dart';
 import 'package:get_smart_pos/src/pigeon/get_smart_pos.pigeon.dart';
 
 import 'get_smart_pos_platform_interface.dart';
