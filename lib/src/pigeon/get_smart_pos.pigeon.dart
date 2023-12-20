@@ -232,8 +232,8 @@ class PigeonPaymentResponse {
   }
 }
 
-class _PaymentHostApiCodec extends StandardMessageCodec {
-  const _PaymentHostApiCodec();
+class _GetSmartPosHostApiCodec extends StandardMessageCodec {
+  const _GetSmartPosHostApiCodec();
   @override
   void writeValue(WriteBuffer buffer, Object? value) {
     if (value is PigeonPaymentRequest) {
@@ -260,18 +260,18 @@ class _PaymentHostApiCodec extends StandardMessageCodec {
   }
 }
 
-class PaymentHostApi {
-  /// Constructor for [PaymentHostApi].  The [binaryMessenger] named argument is
+class GetSmartPosHostApi {
+  /// Constructor for [GetSmartPosHostApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
-  PaymentHostApi({BinaryMessenger? binaryMessenger})
+  GetSmartPosHostApi({BinaryMessenger? binaryMessenger})
       : __pigeon_binaryMessenger = binaryMessenger;
   final BinaryMessenger? __pigeon_binaryMessenger;
 
-  static const MessageCodec<Object?> pigeonChannelCodec = _PaymentHostApiCodec();
+  static const MessageCodec<Object?> pigeonChannelCodec = _GetSmartPosHostApiCodec();
 
   Future<PigeonPaymentResponse> paymentV3(PigeonPaymentRequest request) async {
-    const String __pigeon_channelName = 'dev.flutter.pigeon.get_smart_pos.PaymentHostApi.paymentV3';
+    const String __pigeon_channelName = 'dev.flutter.pigeon.get_smart_pos.GetSmartPosHostApi.paymentV3';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,

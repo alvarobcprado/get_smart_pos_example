@@ -187,7 +187,7 @@ data class PigeonPaymentResponse (
 }
 
 @Suppress("UNCHECKED_CAST")
-private object PaymentHostApiCodec : StandardMessageCodec() {
+private object GetSmartPosHostApiCodec : StandardMessageCodec() {
   override fun readValueOfType(type: Byte, buffer: ByteBuffer): Any? {
     return when (type) {
       128.toByte() -> {
@@ -219,19 +219,19 @@ private object PaymentHostApiCodec : StandardMessageCodec() {
 }
 
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
-interface PaymentHostApi {
+interface GetSmartPosHostApi {
   fun paymentV3(request: PigeonPaymentRequest, callback: (Result<PigeonPaymentResponse>) -> Unit)
 
   companion object {
-    /** The codec used by PaymentHostApi. */
+    /** The codec used by GetSmartPosHostApi. */
     val codec: MessageCodec<Any?> by lazy {
-      PaymentHostApiCodec
+      GetSmartPosHostApiCodec
     }
-    /** Sets up an instance of `PaymentHostApi` to handle messages through the `binaryMessenger`. */
+    /** Sets up an instance of `GetSmartPosHostApi` to handle messages through the `binaryMessenger`. */
     @Suppress("UNCHECKED_CAST")
-    fun setUp(binaryMessenger: BinaryMessenger, api: PaymentHostApi?) {
+    fun setUp(binaryMessenger: BinaryMessenger, api: GetSmartPosHostApi?) {
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.get_smart_pos.PaymentHostApi.paymentV3", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.get_smart_pos.GetSmartPosHostApi.paymentV3", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>

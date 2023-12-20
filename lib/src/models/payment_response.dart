@@ -1,4 +1,4 @@
-import 'package:get_smart_pos/src/pigeon/payment/payment.pigeon.dart';
+import 'package:get_smart_pos/src/pigeon/get_smart_pos.pigeon.dart';
 import 'package:get_smart_pos/src/utils/extensions.dart';
 
 class PaymentResponse {

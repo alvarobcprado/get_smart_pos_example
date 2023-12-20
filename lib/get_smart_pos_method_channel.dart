@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get_smart_pos/src/models/payment_request.dart';
 import 'package:get_smart_pos/src/models/payment_response.dart';
-import 'package:get_smart_pos/src/pigeon/payment/payment.pigeon.dart';
+import 'package:get_smart_pos/src/pigeon/get_smart_pos.pigeon.dart';
 
 import 'get_smart_pos_platform_interface.dart';
 
@@ -13,7 +13,7 @@ class MethodChannelGetSmartPos extends GetSmartPosPlatform {
   final methodChannel = const MethodChannel('get_smart_pos');
 
   @visibleForTesting
-  static PaymentHostApi api = PaymentHostApi();
+  static GetSmartPosHostApi api = GetSmartPosHostApi();
 
   @override
   Future<String?> getPlatformVersion() async {

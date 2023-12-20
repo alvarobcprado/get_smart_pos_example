@@ -1,14 +1,14 @@
 import 'package:pigeon/pigeon.dart';
 
-// dart run pigeon --input pigeons/payment.dart
+// dart run pigeon --input pigeons/messages.dart
 
 @ConfigurePigeon(
   PigeonOptions(
-    dartOut: 'lib/src/pigeon/payment/payment.pigeon.dart',
+    dartOut: 'lib/src/pigeon/get_smart_pos.pigeon.dart',
     // dartTestOut: 'lib/src/pigeon/payment/test_api.dart',
     kotlinOptions: KotlinOptions(package: 'com.example.get_smart_pos'),
     kotlinOut:
-        'android/src/main/kotlin/com/example/get_smart_pos/pigeon/payment/GeneratedPayment.kt',
+        'android/src/main/kotlin/com/example/get_smart_pos/pigeon/GeneratedGetSmartPos.kt',
   ),
 )
 class PigeonPaymentRequest {
@@ -97,8 +97,8 @@ class PigeonPaymentResponse {
   final String? pixPayloadResponse;
 }
 
-@HostApi(dartHostTestHandler: 'TestPaymentHostApi')
-abstract class PaymentHostApi {
+@HostApi(dartHostTestHandler: 'TestGetSmartPosHostApi')
+abstract class GetSmartPosHostApi {
   @async
   PigeonPaymentResponse paymentV3(PigeonPaymentRequest request);
 }

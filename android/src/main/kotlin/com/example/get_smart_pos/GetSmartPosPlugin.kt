@@ -5,7 +5,7 @@ import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 
 /** GetSmartPosPlugin */
-class GetSmartPosPlugin : FlutterPlugin, PaymentHostApi, ActivityAware {
+class GetSmartPosPlugin : FlutterPlugin, GetSmartPosHostApi, ActivityAware {
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -14,11 +14,11 @@ class GetSmartPosPlugin : FlutterPlugin, PaymentHostApi, ActivityAware {
     private var pluginBinding: ActivityPluginBinding? = null
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        PaymentHostApi.setUp(flutterPluginBinding.binaryMessenger, this)
+        GetSmartPosHostApi.setUp(flutterPluginBinding.binaryMessenger, this)
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-        PaymentHostApi.setUp(binding.binaryMessenger, null)
+        GetSmartPosHostApi.setUp(binding.binaryMessenger, null)
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
