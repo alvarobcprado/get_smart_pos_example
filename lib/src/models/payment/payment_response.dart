@@ -1,4 +1,5 @@
 import 'package:get_smart_pos/src/models/payment/payment.dart';
+import 'package:get_smart_pos/src/models/payment/payment_input_type.dart';
 import 'package:get_smart_pos/src/pigeon/get_smart_pos.pigeon.dart';
 import 'package:get_smart_pos/src/utils/extensions.dart';
 
@@ -33,7 +34,7 @@ class PaymentResponse {
         amount = pigeon.amount.toCurrency(),
         callerId = pigeon.callerId,
         type = PaymentTypeResponse.fromPigeon(pigeon.type),
-        inputType = pigeon.inputType,
+        inputType = PaymentInputType.fromPigeon(pigeon.inputType),
         installments = pigeon.installments,
         resultDetails = pigeon.resultDetails,
         nsu = pigeon.nsu,
@@ -76,7 +77,7 @@ class PaymentResponse {
   /// - 051 - chip
   /// - 071 - chip sem contato
   /// - 801 - tarja magnética - fallback
-  final String inputType;
+  final PaymentInputType inputType;
 
   /// Quantidade de parcelas selecionada
   final String installments;
