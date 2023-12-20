@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:get_smart_pos/get_smart_pos.dart';
+import 'package:get_smart_pos_example/src/widgets/payment_response_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,35 +14,26 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
   final _getSmartPosPlugin = GetSmartPos();
+  PaymentResponse? _paymentResponse;
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion =
-          await _getSmartPosPlugin.getPlatformVersion() ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
+  Future<void> _onPaymentTap() async {
+    final request = PaymentRequest(
+      paymentType: PaymentTypeRequest.credit,
+      amount: 23.50,
+      callerId: DateTime.now().millisecondsSinceEpoch.toString(),
+    );
+    final response = await _getSmartPosPlugin.paymentV3(request);
+    if (mounted) {
+      setState(() {
+        _paymentResponse = response;
+      });
     }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
   }
 
   @override
@@ -54,8 +43,23 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+        body: SizedBox.expand(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                OutlinedButton(
+                  onPressed: _onPaymentTap,
+                  child: const Text('PaymentV3'),
+                ),
+                const SizedBox(height: 16),
+                if (_paymentResponse != null)
+                  PaymentResponseView(paymentResponse: _paymentResponse!),
+              ],
+            ),
+          ),
         ),
       ),
     );

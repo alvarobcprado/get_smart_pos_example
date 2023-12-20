@@ -181,9 +181,4 @@ class PaymentResponse {
   /// for do tipo Pix.
   /// Mais detalhes na seção Payload do Pix.
   final String? pixPayloadResponse;
-
-  @override
-  String toString() {
-    return 'PaymentResponse(result: $result, amount: $amount, callerId: $callerId, type: $type, inputType: $inputType, installments: $installments, resultDetails: $resultDetails, nsu: $nsu, nsuLastSuccessfullMessage: $nsuLastSuccessfullMessage, cvNumber: $cvNumber, brand: $brand, gmtDateTime: $gmtDateTime, nsuLocal: $nsuLocal, authorizationCode: $authorizationCode, cardBin: $cardBin, cardLastDigits: $cardLastDigits, extraScreensResult: $extraScreensResult, cardholderName: $cardholderName, automationSlip: $automationSlip, printMerchantPreference: $printMerchantPreference, orderId: $orderId, pixPayloadResponse: $pixPayloadResponse)';
-  }
 }

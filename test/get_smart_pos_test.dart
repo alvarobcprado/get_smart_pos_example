@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_smart_pos/get_smart_pos.dart';
 import 'package:get_smart_pos/get_smart_pos_method_channel.dart';
 import 'package:get_smart_pos/get_smart_pos_platform_interface.dart';
+import 'package:get_smart_pos/src/models/payment/payment_input_type.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockGetSmartPosPlatform
@@ -14,12 +15,12 @@ class MockGetSmartPosPlatform
   Future<PaymentResponse> paymentV3(PaymentRequest request) {
     return Future.value(
       PaymentResponse(
-        result: 'result',
+        result: PaymentResult.success,
         amount: 1.0,
         callerId: 'callerId',
-        type: 'type',
-        inputType: 'inputType',
-        installments: 'installments',
+        type: PaymentTypeResponse.creditInFull,
+        inputType: PaymentInputType.chip,
+        installments: 1,
       ),
     );
   }
