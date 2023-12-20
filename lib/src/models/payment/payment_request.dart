@@ -1,6 +1,4 @@
-import 'package:get_smart_pos/src/models/payment/payment_credit_type.dart';
-import 'package:get_smart_pos/src/models/payment/payment_currency_position.dart';
-import 'package:get_smart_pos/src/models/payment/payment_type.dart';
+import 'package:get_smart_pos/src/models/common/common.dart';
 import 'package:get_smart_pos/src/pigeon/get_smart_pos.pigeon.dart';
 import 'package:get_smart_pos/src/utils/extensions.dart';
 

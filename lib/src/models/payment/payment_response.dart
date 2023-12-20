@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:get_smart_pos/src/models/payment/payment.dart';
-import 'package:get_smart_pos/src/models/payment/payment_input_type.dart';
+
+import 'package:get_smart_pos/src/models/common/common.dart';
 import 'package:get_smart_pos/src/pigeon/get_smart_pos.pigeon.dart';
 import 'package:get_smart_pos/src/utils/extensions.dart';
 
