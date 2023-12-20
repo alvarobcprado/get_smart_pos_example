@@ -1,4 +1,4 @@
-import 'package:get_smart_pos/src/models/payment/payment_result.dart';
+import 'package:get_smart_pos/src/models/payment/payment.dart';
 import 'package:get_smart_pos/src/pigeon/get_smart_pos.pigeon.dart';
 import 'package:get_smart_pos/src/utils/extensions.dart';
 
@@ -32,7 +32,7 @@ class PaymentResponse {
       : result = PaymentResult.fromPigeon(pigeon.result),
         amount = pigeon.amount.toCurrency(),
         callerId = pigeon.callerId,
-        type = pigeon.type,
+        type = PaymentTypeResponse.fromPigeon(pigeon.type),
         inputType = pigeon.inputType,
         installments = pigeon.installments,
         resultDetails = pigeon.resultDetails,
@@ -70,7 +70,7 @@ class PaymentResponse {
   /// - 13 - Crédito parcelado Emissor
   /// - 03 - Voucher
   /// - 30 - Pix
-  final String type;
+  final PaymentTypeResponse type;
 
   /// - 021 - tarja magnética
   /// - 051 - chip

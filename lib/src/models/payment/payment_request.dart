@@ -53,7 +53,7 @@ class PaymentRequest {
   /// (\*) Voucher e Pix podem ser usados no
   /// Pagamento v3, mas apenas em pagamentos
   /// sem Split de Pagamento.
-  final PaymentType paymentType;
+  final PaymentTypeRequest paymentType;
 
   /// Este parâmetro informa o valor da venda.
   final double amount;
@@ -76,6 +76,8 @@ class PaymentRequest {
   /// - `creditMerchant` - Crédito parcelado
   /// Lojista
   /// - `creditIssuer` - Crédito parcelado Emissor
+  ///
+  ///
   /// Crédito à vista não precisa enviar este
   /// campo.
   final PaymentCreditType? creditType;
