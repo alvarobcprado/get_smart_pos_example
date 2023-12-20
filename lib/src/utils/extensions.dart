@@ -10,6 +10,10 @@ extension CurrencyToCentsString on double {
 
 extension CentStringToCurrency on String {
   double toCurrency() {
+    if (isEmpty) {
+      return 0.0;
+    }
+
     final totalCents = int.parse(this);
 
     final totalCurrency = double.parse((totalCents / 100).toStringAsFixed(2));

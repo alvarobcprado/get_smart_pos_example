@@ -1,3 +1,4 @@
+import 'package:get_smart_pos/src/models/payment/payment_result.dart';
 import 'package:get_smart_pos/src/pigeon/get_smart_pos.pigeon.dart';
 import 'package:get_smart_pos/src/utils/extensions.dart';
 
@@ -28,7 +29,7 @@ class PaymentResponse {
   });
 
   PaymentResponse.fromPigeon(PigeonPaymentResponse pigeon)
-      : result = pigeon.result,
+      : result = PaymentResult.fromPigeon(pigeon.result),
         amount = pigeon.amount.toCurrency(),
         callerId = pigeon.callerId,
         type = pigeon.type,
@@ -51,7 +52,7 @@ class PaymentResponse {
         orderId = pigeon.orderId,
         pixPayloadResponse = pigeon.pixPayloadResponse;
 
-  final String result;
+  final PaymentResult result;
   final double amount;
   final String callerId;
   final String type;
