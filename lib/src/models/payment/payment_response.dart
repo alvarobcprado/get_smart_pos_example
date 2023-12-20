@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:get_smart_pos/src/models/payment/payment.dart';
 import 'package:get_smart_pos/src/models/payment/payment_input_type.dart';
 import 'package:get_smart_pos/src/pigeon/get_smart_pos.pigeon.dart';
@@ -35,13 +36,13 @@ class PaymentResponse {
         callerId = pigeon.callerId,
         type = PaymentTypeResponse.fromPigeon(pigeon.type),
         inputType = PaymentInputType.fromPigeon(pigeon.inputType),
-        installments = pigeon.installments,
+        installments = pigeon.installments.toIntOrNull(),
         resultDetails = pigeon.resultDetails,
         nsu = pigeon.nsu,
         nsuLastSuccessfullMessage = pigeon.nsuLastSuccessfullMessage,
         cvNumber = pigeon.cvNumber,
         brand = pigeon.brand,
-        gmtDateTime = pigeon.gmtDateTime,
+        gmtDateTime = pigeon.gmtDateTime?.toDateTimeOrNull(),
         nsuLocal = pigeon.nsuLocal,
         authorizationCode = pigeon.authorizationCode,
         cardBin = pigeon.cardBin,
@@ -71,16 +72,16 @@ class PaymentResponse {
   /// - 13 - Crédito parcelado Emissor
   /// - 03 - Voucher
   /// - 30 - Pix
-  final PaymentTypeResponse type;
+  final PaymentTypeResponse? type;
 
   /// - 021 - tarja magnética
   /// - 051 - chip
   /// - 071 - chip sem contato
   /// - 801 - tarja magnética - fallback
-  final PaymentInputType inputType;
+  final PaymentInputType? inputType;
 
   /// Quantidade de parcelas selecionada
-  final String installments;
+  final int? installments;
 
   /// Texto com detalhes do retorno, conforme [PaymentResult]
   final String? resultDetails;
@@ -104,7 +105,7 @@ class PaymentResponse {
   /// Data e hora GMT da transação (MMDDhhmmss).
   ///
   /// Este campo representa o horário GMT
-  final String? gmtDateTime;
+  final DateTime? gmtDateTime;
 
   /// NSU gerado no terminal(DOC impresso no
   /// comprovante, número sequencial por terminal)
@@ -180,4 +181,9 @@ class PaymentResponse {
   /// for do tipo Pix.
   /// Mais detalhes na seção Payload do Pix.
   final String? pixPayloadResponse;
+
+  @override
+  String toString() {
+    return 'PaymentResponse(result: $result, amount: $amount, callerId: $callerId, type: $type, inputType: $inputType, installments: $installments, resultDetails: $resultDetails, nsu: $nsu, nsuLastSuccessfullMessage: $nsuLastSuccessfullMessage, cvNumber: $cvNumber, brand: $brand, gmtDateTime: $gmtDateTime, nsuLocal: $nsuLocal, authorizationCode: $authorizationCode, cardBin: $cardBin, cardLastDigits: $cardLastDigits, extraScreensResult: $extraScreensResult, cardholderName: $cardholderName, automationSlip: $automationSlip, printMerchantPreference: $printMerchantPreference, orderId: $orderId, pixPayloadResponse: $pixPayloadResponse)';
+  }
 }

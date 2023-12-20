@@ -20,10 +20,23 @@ extension StringFromPigeon on String {
 
     return totalCurrency;
   }
-}
 
-extension IntToPigeon on int {
-  String toPigeon() {
-    return toString();
+  int? toIntOrNull() {
+    return int.tryParse(this);
+  }
+
+  DateTime? toDateTimeOrNull() {
+    if (isEmpty || length != 10) {
+      return null;
+    }
+
+    final month = int.parse(substring(0, 2));
+    final day = int.parse(substring(2, 4));
+    final hour = int.parse(substring(4, 6));
+    final minute = int.parse(substring(6, 8));
+    final second = int.parse(substring(8, 10));
+
+    final now = DateTime.now();
+    return DateTime(now.year, month, day, hour, minute, second);
   }
 }

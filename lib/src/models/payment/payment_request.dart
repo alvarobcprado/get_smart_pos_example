@@ -31,7 +31,7 @@ class PaymentRequest {
       currencyPosition: currencyPosition?.toPigeon(),
       currencyCode: currencyCode,
       creditType: creditType?.toPigeon(),
-      installments: installments?.toPigeon(),
+      installments: installments?.toString(),
       extraScreens: extraScreens,
       extraData: extraData,
       disableTypedTransaction: disableTypedTransaction,
