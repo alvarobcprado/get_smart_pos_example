@@ -25,6 +25,18 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
+  void _setResponse({
+    PaymentResponse? paymentResponse,
+    CheckStatusResponse? checkStatusResponse,
+    RefundResponse? refundResponse,
+  }) {
+    setState(() {
+      _paymentResponse = paymentResponse;
+      _checkStatusResponse = checkStatusResponse;
+      _refundResponse = refundResponse;
+    });
+  }
+
   Future<void> _onPaymentTap() async {
     final request = PaymentRequest(
       paymentType: PaymentTypeRequest.credit,
@@ -33,9 +45,7 @@ class _MyAppState extends State<MyApp> {
     );
     final response = await _getSmartPosPlugin.paymentV3(request);
     if (mounted) {
-      setState(() {
-        _paymentResponse = response;
-      });
+      _setResponse(paymentResponse: response);
     }
   }
 
@@ -46,9 +56,7 @@ class _MyAppState extends State<MyApp> {
     );
     final response = await _getSmartPosPlugin.checkStatus(request);
     if (mounted) {
-      setState(() {
-        _checkStatusResponse = response;
-      });
+      _setResponse(checkStatusResponse: response);
     }
   }
 
@@ -61,9 +69,7 @@ class _MyAppState extends State<MyApp> {
     );
     final response = await _getSmartPosPlugin.refund(request);
     if (mounted) {
-      setState(() {
-        _refundResponse = response;
-      });
+      _setResponse(refundResponse: response);
     }
   }
 
@@ -85,17 +91,17 @@ class _MyAppState extends State<MyApp> {
                   onPressed: _onPaymentTap,
                   child: const Text('PaymentV3'),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
                 OutlinedButton(
                   onPressed: _onCheckStatusTap,
                   child: const Text('CheckStatus'),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
                 OutlinedButton(
                   onPressed: _onRefundTap,
                   child: const Text('Refund'),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
                 ResponseView(
                   paymentResponse: _paymentResponse,
                   checkStatusResponse: _checkStatusResponse,

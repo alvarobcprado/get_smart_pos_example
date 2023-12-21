@@ -30,7 +30,6 @@ class GetSmartPosDelegate(private val activity: Activity) : PluginRegistry.Activ
     private var checkStatusResultCallback: (Result<PigeonCheckStatusResponse>) -> Unit = {}
     private var refundResultCallback: (Result<PigeonRefundResponse>) -> Unit = {}
 
-
     fun paymentV3(
         paymentRequest: PigeonPaymentRequest,
         resultCallback: (Result<PigeonPaymentResponse>) -> Unit
@@ -88,7 +87,7 @@ class GetSmartPosDelegate(private val activity: Activity) : PluginRegistry.Activ
         ActivityCompat.startActivityForResult(activity, intent, requestCode, null)
     }
 
-    private fun <Response> handleResult(
+    private fun <Response> handleDeeplinkResult(
         resultCode: Int,
         data: Intent?,
         mapper: BaseMapper<*, Response>,
@@ -107,17 +106,29 @@ class GetSmartPosDelegate(private val activity: Activity) : PluginRegistry.Activ
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
         return when (requestCode) {
             PAYMENT_REQUEST_CODE -> {
-                handlePaymentResult(resultCode, data)
+                handleDeeplinkResult(
+                    resultCode,
+                    data,
+                    paymentMapper,
+                    paymentResultCallback,
+                    FlutterError("PAYMENT_ERROR", "The payment cannot be completed"),
+                )
                 true
             }
 
             CHECK_STATUS_REQUEST_CODE -> {
-                handleCheckStatusResult(resultCode, data)
+                handleDeeplinkResult(
+                    resultCode,
+                    data,
+                    checkStatusMapper,
+                    checkStatusResultCallback,
+                    FlutterError("CHECK_STATUS_ERROR", "The status check cannot be completed"),
+                )
                 true
             }
 
             REFUND_REQUEST_CODE -> {
-                handleResult(
+                handleDeeplinkResult(
                     resultCode,
                     data,
                     refundMapper,
@@ -128,34 +139,6 @@ class GetSmartPosDelegate(private val activity: Activity) : PluginRegistry.Activ
             }
 
             else -> false
-        }
-    }
-
-    private fun handlePaymentResult(resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK) {
-            // Extract the parameters from the intent and return the result
-            val paymentResponse = paymentMapper.intentToResponse(data)
-            paymentResultCallback(Result.success(paymentResponse))
-        } else {
-            paymentResultCallback(
-                Result.failure(
-                    FlutterError("PAYMENT_ERROR", "The payment cannot be completed"),
-                ),
-            )
-        }
-    }
-
-    private fun handleCheckStatusResult(resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK) {
-            // Extract the parameters from the intent and return the result
-            val checkStatusResponse = checkStatusMapper.intentToResponse(data)
-            checkStatusResultCallback(Result.success(checkStatusResponse))
-        } else {
-            checkStatusResultCallback(
-                Result.failure(
-                    FlutterError("CHECK_STATUS_ERROR", "The status check cannot be completed"),
-                ),
-            )
         }
     }
 }
