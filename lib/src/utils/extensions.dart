@@ -1,5 +1,7 @@
+import 'package:intl/intl.dart';
+
 extension DoubleToPigeon on double {
-  String toPigeon() {
+  String toPigeonCurrency() {
     final totalCents = double.parse(toStringAsFixed(2)) * 100;
 
     final totalCentsString = totalCents.toStringAsFixed(0).padLeft(12, '0');
@@ -25,7 +27,8 @@ extension StringFromPigeon on String {
     return int.tryParse(this);
   }
 
-  DateTime? toDateTimeOrNull() {
+  /// Converts a string in the format `MMDDhhmmss` to a DateTime object.
+  DateTime? toGMTDateTimeOrNull() {
     if (isEmpty || length != 10) {
       return null;
     }
@@ -39,14 +42,26 @@ extension StringFromPigeon on String {
     final now = DateTime.now();
     return DateTime(now.year, month, day, hour, minute, second);
   }
-}
 
-extension NullableStringToPigeon on String? {
-  bool? toBoolOrNull() {
-    if (this == null) {
+  /// Converts a string in the format `ddMMyyyy` to a DateTime object.
+  DateTime? toDateTimeOrNull() {
+    if (isEmpty || length != 8) {
       return null;
     }
 
-    return this!.toLowerCase() == 'true';
+    final formatter = DateFormat('ddMMyyyy');
+    return formatter.tryParse(this);
+  }
+
+  bool toBool() {
+    return toLowerCase() == 'true';
+  }
+}
+
+extension DateTimeToPigeon on DateTime {
+  /// Converts a DateTime object to a string in the format dd/MM/yyyy.
+  String? toFormattedString() {
+    final formatter = DateFormat('dd/MM/yyyy');
+    return formatter.format(this);
   }
 }

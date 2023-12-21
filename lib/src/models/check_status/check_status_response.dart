@@ -41,7 +41,7 @@ class CheckStatusResponse {
         nsuLastSuccessfullMessage = pigeon.nsuLastSuccessfullMessage,
         cvNumber = pigeon.cvNumber,
         brand = pigeon.brand,
-        gmtDateTime = pigeon.gmtDateTime?.toDateTimeOrNull(),
+        gmtDateTime = pigeon.gmtDateTime?.toGMTDateTimeOrNull(),
         nsuLocal = pigeon.nsuLocal,
         authorizationCode = pigeon.authorizationCode,
         cardBin = pigeon.cardBin,
@@ -52,7 +52,7 @@ class CheckStatusResponse {
         printMerchantPreference = pigeon.printMerchantPreference,
         orderId = pigeon.orderId,
         pixPayloadResponse = pigeon.pixPayloadResponse,
-        refunded = pigeon.refunded?.toBoolOrNull();
+        refunded = pigeon.refunded?.toBool();
 
   /// Resultado da transação
   final PaymentResult result;

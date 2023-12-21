@@ -16,4 +16,8 @@ class GetSmartPos {
   Future<CheckStatusResponse> checkStatus(CheckStatusRequest request) {
     return GetSmartPosPlatform.instance.checkStatus(request);
   }
+
+  Future<RefundResponse> refund(RefundRequest request) {
+    return GetSmartPosPlatform.instance.refund(request);
+  }
 }

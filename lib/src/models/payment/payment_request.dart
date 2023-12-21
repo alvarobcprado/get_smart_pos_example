@@ -24,7 +24,7 @@ class PaymentRequest {
   PigeonPaymentRequest toPigeon() {
     return PigeonPaymentRequest(
       paymentType: paymentType.toPigeon(),
-      amount: amount.toPigeon(),
+      amount: amount.toPigeonCurrency(),
       callerId: callerId,
       currencyPosition: currencyPosition?.toPigeon(),
       currencyCode: currencyCode,

@@ -35,4 +35,8 @@ abstract class GetSmartPosPlatform extends PlatformInterface {
   Future<CheckStatusResponse> checkStatus(CheckStatusRequest request) {
     throw UnimplementedError('checkStatus() has not been implemented.');
   }
+
+  Future<RefundResponse> refund(RefundRequest request) {
+    throw UnimplementedError('refund() has not been implemented.');
+  }
 }

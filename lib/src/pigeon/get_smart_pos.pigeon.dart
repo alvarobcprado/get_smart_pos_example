@@ -389,6 +389,138 @@ class PigeonCheckStatusResponse {
   }
 }
 
+class PigeonRefundRequest {
+  PigeonRefundRequest({
+    this.amount,
+    this.transactionDate,
+    this.cvNumber,
+    this.originTerminal,
+    this.allowPrintCurrentTransaction,
+  });
+
+  String? amount;
+
+  String? transactionDate;
+
+  String? cvNumber;
+
+  String? originTerminal;
+
+  bool? allowPrintCurrentTransaction;
+
+  Object encode() {
+    return <Object?>[
+      amount,
+      transactionDate,
+      cvNumber,
+      originTerminal,
+      allowPrintCurrentTransaction,
+    ];
+  }
+
+  static PigeonRefundRequest decode(Object result) {
+    result as List<Object?>;
+    return PigeonRefundRequest(
+      amount: result[0] as String?,
+      transactionDate: result[1] as String?,
+      cvNumber: result[2] as String?,
+      originTerminal: result[3] as String?,
+      allowPrintCurrentTransaction: result[4] as bool?,
+    );
+  }
+}
+
+class PigeonRefundResponse {
+  PigeonRefundResponse({
+    required this.result,
+    this.resultDetails,
+    required this.amount,
+    this.gmtDateTime,
+    this.nsu,
+    this.nsuLocal,
+    this.nsuLastSuccessfullMessage,
+    this.authorizationCode,
+    this.cardBin,
+    this.cardLastDigits,
+    this.refundTransactionDate,
+    this.refundCvNumber,
+    this.refundOriginTerminal,
+    this.cardholderName,
+    this.automationSlip,
+  });
+
+  String result;
+
+  String? resultDetails;
+
+  String amount;
+
+  String? gmtDateTime;
+
+  String? nsu;
+
+  String? nsuLocal;
+
+  String? nsuLastSuccessfullMessage;
+
+  String? authorizationCode;
+
+  String? cardBin;
+
+  String? cardLastDigits;
+
+  String? refundTransactionDate;
+
+  String? refundCvNumber;
+
+  String? refundOriginTerminal;
+
+  String? cardholderName;
+
+  String? automationSlip;
+
+  Object encode() {
+    return <Object?>[
+      result,
+      resultDetails,
+      amount,
+      gmtDateTime,
+      nsu,
+      nsuLocal,
+      nsuLastSuccessfullMessage,
+      authorizationCode,
+      cardBin,
+      cardLastDigits,
+      refundTransactionDate,
+      refundCvNumber,
+      refundOriginTerminal,
+      cardholderName,
+      automationSlip,
+    ];
+  }
+
+  static PigeonRefundResponse decode(Object result) {
+    result as List<Object?>;
+    return PigeonRefundResponse(
+      result: result[0]! as String,
+      resultDetails: result[1] as String?,
+      amount: result[2]! as String,
+      gmtDateTime: result[3] as String?,
+      nsu: result[4] as String?,
+      nsuLocal: result[5] as String?,
+      nsuLastSuccessfullMessage: result[6] as String?,
+      authorizationCode: result[7] as String?,
+      cardBin: result[8] as String?,
+      cardLastDigits: result[9] as String?,
+      refundTransactionDate: result[10] as String?,
+      refundCvNumber: result[11] as String?,
+      refundOriginTerminal: result[12] as String?,
+      cardholderName: result[13] as String?,
+      automationSlip: result[14] as String?,
+    );
+  }
+}
+
 class _GetSmartPosHostApiCodec extends StandardMessageCodec {
   const _GetSmartPosHostApiCodec();
   @override
@@ -404,6 +536,12 @@ class _GetSmartPosHostApiCodec extends StandardMessageCodec {
       writeValue(buffer, value.encode());
     } else if (value is PigeonPaymentResponse) {
       buffer.putUint8(131);
+      writeValue(buffer, value.encode());
+    } else if (value is PigeonRefundRequest) {
+      buffer.putUint8(132);
+      writeValue(buffer, value.encode());
+    } else if (value is PigeonRefundResponse) {
+      buffer.putUint8(133);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -421,6 +559,10 @@ class _GetSmartPosHostApiCodec extends StandardMessageCodec {
         return PigeonPaymentRequest.decode(readValue(buffer)!);
       case 131: 
         return PigeonPaymentResponse.decode(readValue(buffer)!);
+      case 132: 
+        return PigeonRefundRequest.decode(readValue(buffer)!);
+      case 133: 
+        return PigeonRefundResponse.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
     }
@@ -488,6 +630,33 @@ class GetSmartPosHostApi {
       );
     } else {
       return (__pigeon_replyList[0] as PigeonCheckStatusResponse?)!;
+    }
+  }
+
+  Future<PigeonRefundResponse> refund(PigeonRefundRequest request) async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.get_smart_pos.GetSmartPosHostApi.refund';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+      __pigeon_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: __pigeon_binaryMessenger,
+    );
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[request]) as List<Object?>?;
+    if (__pigeon_replyList == null) {
+      throw _createConnectionError(__pigeon_channelName);
+    } else if (__pigeon_replyList.length > 1) {
+      throw PlatformException(
+        code: __pigeon_replyList[0]! as String,
+        message: __pigeon_replyList[1] as String?,
+        details: __pigeon_replyList[2],
+      );
+    } else if (__pigeon_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (__pigeon_replyList[0] as PigeonRefundResponse?)!;
     }
   }
 }

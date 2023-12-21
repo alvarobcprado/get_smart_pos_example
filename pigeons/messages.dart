@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:pigeon/pigeon.dart';
 
 // dart run pigeon --input pigeons/messages.dart
@@ -48,7 +49,7 @@ class PigeonPaymentRequest {
 }
 
 class PigeonPaymentResponse {
-  PigeonPaymentResponse({
+  const PigeonPaymentResponse({
     required this.result,
     required this.amount,
     required this.callerId,
@@ -98,7 +99,7 @@ class PigeonPaymentResponse {
 }
 
 class PigeonCheckStatusRequest {
-  PigeonCheckStatusRequest({
+  const PigeonCheckStatusRequest({
     required this.callerId,
     required this.allowPrintCurrentTransaction,
   });
@@ -108,7 +109,7 @@ class PigeonCheckStatusRequest {
 }
 
 class PigeonCheckStatusResponse {
-  PigeonCheckStatusResponse({
+  const PigeonCheckStatusResponse({
     required this.result,
     this.resultDetails,
     this.amount,
@@ -159,6 +160,58 @@ class PigeonCheckStatusResponse {
   final String? refunded;
 }
 
+class PigeonRefundRequest {
+  const PigeonRefundRequest({
+    this.amount,
+    this.transactionDate,
+    this.cvNumber,
+    this.originTerminal,
+    this.allowPrintCurrentTransaction,
+  });
+
+  final String? amount;
+  final String? transactionDate;
+  final String? cvNumber;
+  final String? originTerminal;
+  final bool? allowPrintCurrentTransaction;
+}
+
+class PigeonRefundResponse {
+  const PigeonRefundResponse({
+    required this.result,
+    required this.amount,
+    this.resultDetails,
+    this.nsu,
+    this.nsuLastSuccessfullMessage,
+    this.gmtDateTime,
+    this.nsuLocal,
+    this.authorizationCode,
+    this.cardBin,
+    this.cardLastDigits,
+    this.refundTransactionDate,
+    this.refundCvNumber,
+    this.refundOriginTerminal,
+    this.cardholderName,
+    this.automationSlip,
+  });
+
+  final String result;
+  final String? resultDetails;
+  final String amount;
+  final String? gmtDateTime;
+  final String? nsu;
+  final String? nsuLocal;
+  final String? nsuLastSuccessfullMessage;
+  final String? authorizationCode;
+  final String? cardBin;
+  final String? cardLastDigits;
+  final String? refundTransactionDate;
+  final String? refundCvNumber;
+  final String? refundOriginTerminal;
+  final String? cardholderName;
+  final String? automationSlip;
+}
+
 @HostApi(dartHostTestHandler: 'TestGetSmartPosHostApi')
 abstract class GetSmartPosHostApi {
   @async
@@ -166,4 +219,7 @@ abstract class GetSmartPosHostApi {
 
   @async
   PigeonCheckStatusResponse checkStatus(PigeonCheckStatusRequest request);
+
+  @async
+  PigeonRefundResponse refund(PigeonRefundRequest request);
 }

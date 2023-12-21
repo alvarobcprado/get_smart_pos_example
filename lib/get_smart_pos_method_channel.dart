@@ -34,4 +34,11 @@ class MethodChannelGetSmartPos extends GetSmartPosPlatform {
     final response = await api.checkStatus(pigeonRequest);
     return CheckStatusResponse.fromPigeon(response);
   }
+
+  @override
+  Future<RefundResponse> refund(RefundRequest request) async {
+    final pigeonRequest = request.toPigeon();
+    final response = await api.refund(pigeonRequest);
+    return RefundResponse.fromPigeon(response);
+  }
 }

@@ -293,6 +293,98 @@ data class PigeonCheckStatusResponse (
   }
 }
 
+/** Generated class from Pigeon that represents data sent in messages. */
+data class PigeonRefundRequest (
+  val amount: String? = null,
+  val transactionDate: String? = null,
+  val cvNumber: String? = null,
+  val originTerminal: String? = null,
+  val allowPrintCurrentTransaction: Boolean? = null
+
+) {
+  companion object {
+    @Suppress("UNCHECKED_CAST")
+    fun fromList(list: List<Any?>): PigeonRefundRequest {
+      val amount = list[0] as String?
+      val transactionDate = list[1] as String?
+      val cvNumber = list[2] as String?
+      val originTerminal = list[3] as String?
+      val allowPrintCurrentTransaction = list[4] as Boolean?
+      return PigeonRefundRequest(amount, transactionDate, cvNumber, originTerminal, allowPrintCurrentTransaction)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf<Any?>(
+      amount,
+      transactionDate,
+      cvNumber,
+      originTerminal,
+      allowPrintCurrentTransaction,
+    )
+  }
+}
+
+/** Generated class from Pigeon that represents data sent in messages. */
+data class PigeonRefundResponse (
+  val result: String,
+  val resultDetails: String? = null,
+  val amount: String,
+  val gmtDateTime: String? = null,
+  val nsu: String? = null,
+  val nsuLocal: String? = null,
+  val nsuLastSuccessfullMessage: String? = null,
+  val authorizationCode: String? = null,
+  val cardBin: String? = null,
+  val cardLastDigits: String? = null,
+  val refundTransactionDate: String? = null,
+  val refundCvNumber: String? = null,
+  val refundOriginTerminal: String? = null,
+  val cardholderName: String? = null,
+  val automationSlip: String? = null
+
+) {
+  companion object {
+    @Suppress("UNCHECKED_CAST")
+    fun fromList(list: List<Any?>): PigeonRefundResponse {
+      val result = list[0] as String
+      val resultDetails = list[1] as String?
+      val amount = list[2] as String
+      val gmtDateTime = list[3] as String?
+      val nsu = list[4] as String?
+      val nsuLocal = list[5] as String?
+      val nsuLastSuccessfullMessage = list[6] as String?
+      val authorizationCode = list[7] as String?
+      val cardBin = list[8] as String?
+      val cardLastDigits = list[9] as String?
+      val refundTransactionDate = list[10] as String?
+      val refundCvNumber = list[11] as String?
+      val refundOriginTerminal = list[12] as String?
+      val cardholderName = list[13] as String?
+      val automationSlip = list[14] as String?
+      return PigeonRefundResponse(result, resultDetails, amount, gmtDateTime, nsu, nsuLocal, nsuLastSuccessfullMessage, authorizationCode, cardBin, cardLastDigits, refundTransactionDate, refundCvNumber, refundOriginTerminal, cardholderName, automationSlip)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf<Any?>(
+      result,
+      resultDetails,
+      amount,
+      gmtDateTime,
+      nsu,
+      nsuLocal,
+      nsuLastSuccessfullMessage,
+      authorizationCode,
+      cardBin,
+      cardLastDigits,
+      refundTransactionDate,
+      refundCvNumber,
+      refundOriginTerminal,
+      cardholderName,
+      automationSlip,
+    )
+  }
+}
+
 @Suppress("UNCHECKED_CAST")
 private object GetSmartPosHostApiCodec : StandardMessageCodec() {
   override fun readValueOfType(type: Byte, buffer: ByteBuffer): Any? {
@@ -317,6 +409,16 @@ private object GetSmartPosHostApiCodec : StandardMessageCodec() {
           PigeonPaymentResponse.fromList(it)
         }
       }
+      132.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          PigeonRefundRequest.fromList(it)
+        }
+      }
+      133.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          PigeonRefundResponse.fromList(it)
+        }
+      }
       else -> super.readValueOfType(type, buffer)
     }
   }
@@ -338,6 +440,14 @@ private object GetSmartPosHostApiCodec : StandardMessageCodec() {
         stream.write(131)
         writeValue(stream, value.toList())
       }
+      is PigeonRefundRequest -> {
+        stream.write(132)
+        writeValue(stream, value.toList())
+      }
+      is PigeonRefundResponse -> {
+        stream.write(133)
+        writeValue(stream, value.toList())
+      }
       else -> super.writeValue(stream, value)
     }
   }
@@ -347,6 +457,7 @@ private object GetSmartPosHostApiCodec : StandardMessageCodec() {
 interface GetSmartPosHostApi {
   fun paymentV3(request: PigeonPaymentRequest, callback: (Result<PigeonPaymentResponse>) -> Unit)
   fun checkStatus(request: PigeonCheckStatusRequest, callback: (Result<PigeonCheckStatusResponse>) -> Unit)
+  fun refund(request: PigeonRefundRequest, callback: (Result<PigeonRefundResponse>) -> Unit)
 
   companion object {
     /** The codec used by GetSmartPosHostApi. */
@@ -383,6 +494,26 @@ interface GetSmartPosHostApi {
             val args = message as List<Any?>
             val requestArg = args[0] as PigeonCheckStatusRequest
             api.checkStatus(requestArg) { result: Result<PigeonCheckStatusResponse> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.get_smart_pos.GetSmartPosHostApi.refund", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val requestArg = args[0] as PigeonRefundRequest
+            api.refund(requestArg) { result: Result<PigeonRefundResponse> ->
               val error = result.exceptionOrNull()
               if (error != null) {
                 reply.reply(wrapError(error))

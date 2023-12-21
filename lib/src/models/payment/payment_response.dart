@@ -42,7 +42,7 @@ class PaymentResponse {
         nsuLastSuccessfullMessage = pigeon.nsuLastSuccessfullMessage,
         cvNumber = pigeon.cvNumber,
         brand = pigeon.brand,
-        gmtDateTime = pigeon.gmtDateTime?.toDateTimeOrNull(),
+        gmtDateTime = pigeon.gmtDateTime?.toGMTDateTimeOrNull(),
         nsuLocal = pigeon.nsuLocal,
         authorizationCode = pigeon.authorizationCode,
         cardBin = pigeon.cardBin,

@@ -37,6 +37,16 @@ class MockGetSmartPosPlatform
       ),
     );
   }
+
+  @override
+  Future<RefundResponse> refund(RefundRequest request) {
+    return Future.value(
+      RefundResponse(
+        result: PaymentResult.success,
+        amount: 1.0,
+      ),
+    );
+  }
 }
 
 void main() {
