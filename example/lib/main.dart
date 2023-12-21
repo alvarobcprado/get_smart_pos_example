@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_smart_pos/get_smart_pos.dart';
-import 'package:get_smart_pos_example/src/widgets/check_status_response_view.dart';
-import 'package:get_smart_pos_example/src/widgets/payment_response_view.dart';
+import 'package:get_smart_pos_example/src/widgets/response_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +18,7 @@ class _MyAppState extends State<MyApp> {
   final _getSmartPosPlugin = GetSmartPos();
   PaymentResponse? _paymentResponse;
   CheckStatusResponse? _checkStatusResponse;
+  RefundResponse? _refundResponse;
 
   @override
   void initState() {
@@ -52,6 +52,21 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  Future<void> _onRefundTap() async {
+    final request = RefundRequest(
+      amount: 50.00,
+      cvNumber: '123456789',
+      transactionDate: DateTime.now(),
+      originTerminal: '12345678',
+    );
+    final response = await _getSmartPosPlugin.refund(request);
+    if (mounted) {
+      setState(() {
+        _refundResponse = response;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -76,12 +91,16 @@ class _MyAppState extends State<MyApp> {
                   child: const Text('CheckStatus'),
                 ),
                 const SizedBox(height: 16),
-                if (_paymentResponse != null)
-                  PaymentResponseView(paymentResponse: _paymentResponse!),
-                if (_checkStatusResponse != null)
-                  CheckStatusResponseView(
-                    checkStatusResponse: _checkStatusResponse!,
-                  ),
+                OutlinedButton(
+                  onPressed: _onRefundTap,
+                  child: const Text('Refund'),
+                ),
+                const SizedBox(height: 16),
+                ResponseView(
+                  paymentResponse: _paymentResponse,
+                  checkStatusResponse: _checkStatusResponse,
+                  refundResponse: _refundResponse,
+                ),
               ],
             ),
           ),
