@@ -53,4 +53,11 @@ class GetSmartPosPlugin : FlutterPlugin, GetSmartPosHostApi, ActivityAware {
     ) {
         delegate.checkStatus(request, callback)
     }
+
+    override fun refund(
+        request: PigeonRefundRequest,
+        callback: (Result<PigeonRefundResponse>) -> Unit
+    ) {
+        delegate.refund(request, callback)
+    }
 }
